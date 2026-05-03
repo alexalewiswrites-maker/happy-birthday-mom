@@ -20,61 +20,10 @@
     .container {
       text-align: center;
       position: relative;
-      width: 350px;
-      height: 350px;
+      width: 360px;
+      height: 360px;
     }
 
-    h2 {
-      font-size: 18px;
-      color: #6b4b5a;
-      margin-bottom: 15px;
-    }
-
-    /* PIXEL HEART */
-    .heart {
-      width: 16px;
-      height: 16px;
-      background: #ff7eb6;
-      position: relative;
-      margin: 0 auto 20px auto;
-      transform: scale(6);
-      image-rendering: pixelated;
-    }
-
-    .heart::before,
-    .heart::after {
-      content: "";
-      width: 16px;
-      height: 16px;
-      background: #ff7eb6;
-      position: absolute;
-    }
-
-    .heart::before {
-      left: -16px;
-    }
-
-    .heart::after {
-      top: -16px;
-    }
-
-    .pixel-button {
-      padding: 12px 20px;
-      font-size: 16px;
-      border: 4px solid #3d7d4f;
-      background: #7dff9f;
-      color: #2d5a3a;
-      cursor: pointer;
-      box-shadow: 4px 4px 0px #3d7d4f;
-      transition: transform 0.1s ease;
-    }
-
-    .pixel-button:active {
-      transform: translate(2px, 2px);
-      box-shadow: 2px 2px 0px #3d7d4f;
-    }
-
-    /* SCREEN SECTIONS */
     .screen {
       position: absolute;
       inset: 0;
@@ -90,38 +39,90 @@
       pointer-events: none;
     }
 
-    /* ENVELOPE */
-    .envelope-wrapper {
-      position: relative;
-      width: 220px;
-      height: 140px;
-      cursor: pointer;
-      transform: translateX(400px);
-      transition: transform 0.8s ease;
-    }
-
-    .envelope {
-      position: absolute;
-      width: 220px;
-      height: 140px;
-      background: #ffe4f2;
-      border: 5px solid #cc7fa6;
-      box-sizing: border-box;
+    /* ---------- PIXEL HEART (REAL SHAPE) ---------- */
+    .pixel-heart {
+      display: grid;
+      grid-template-columns: repeat(7, 12px);
+      grid-template-rows: repeat(6, 12px);
+      gap: 2px;
+      margin-bottom: 25px;
+      transform: scale(2.8);
       image-rendering: pixelated;
     }
 
-    /* flap */
+    .pixel-heart div {
+      width: 12px;
+      height: 12px;
+      background: transparent;
+    }
+
+    .pixel-heart .filled {
+      background: #ff7eb6;
+    }
+
+    /* ---------- BUTTON ---------- */
+    .pixel-button {
+      padding: 12px 22px;
+      font-size: 16px;
+      border: 4px solid #3d7d4f;
+      background: #7dff9f;
+      color: #2d5a3a;
+      cursor: pointer;
+      box-shadow: 4px 4px 0px #3d7d4f;
+      transition: transform 0.1s ease;
+    }
+
+    .pixel-button:active {
+      transform: translate(2px, 2px);
+      box-shadow: 2px 2px 0px #3d7d4f;
+    }
+
+    /* ---------- SCREEN 2 TEXT ---------- */
+    .instruction {
+      font-size: 16px;
+      color: #6b4b5a;
+      margin-bottom: 15px;
+    }
+
+    /* ---------- ENVELOPE ---------- */
+    .envelope-wrapper {
+      position: relative;
+      width: 240px;
+      height: 160px;
+      cursor: pointer;
+      transform: translateX(450px);
+      transition: transform 0.8s ease;
+    }
+
+    .show-envelope {
+      transform: translateX(0);
+    }
+
+    /* envelope body */
+    .envelope {
+      position: absolute;
+      bottom: 0;
+      width: 240px;
+      height: 150px;
+      background: #ffe4f2;
+      border: 5px solid #cc7fa6;
+      box-sizing: border-box;
+      overflow: hidden;
+    }
+
+    /* top flap */
     .flap {
       position: absolute;
-      top: 0;
+      top: 10px;
       left: 0;
       width: 0;
       height: 0;
-      border-left: 110px solid transparent;
-      border-right: 110px solid transparent;
-      border-top: 80px solid #ffb6d8;
+      border-left: 120px solid transparent;
+      border-right: 120px solid transparent;
+      border-top: 85px solid #ffb6d8;
       transform-origin: top;
       transition: transform 0.6s ease;
+      z-index: 3;
     }
 
     /* bottom triangle */
@@ -131,51 +132,41 @@
       left: 0;
       width: 0;
       height: 0;
-      border-left: 110px solid transparent;
-      border-right: 110px solid transparent;
-      border-bottom: 80px solid #ffc9e4;
+      border-left: 120px solid transparent;
+      border-right: 120px solid transparent;
+      border-bottom: 85px solid #ffc9e4;
+      z-index: 2;
     }
 
-    /* letter */
+    /* ---------- LETTER (HIDDEN INSIDE) ---------- */
     .letter {
       position: absolute;
-      bottom: 10px;
+      bottom: 15px;
       left: 50%;
-      transform: translateX(-50%) translateY(80px);
-      width: 190px;
-      height: 100px;
+      transform: translateX(-50%) translateY(90px);
+      width: 200px;
+      height: 110px;
       background: #ffffff;
       border: 4px solid #cc7fa6;
       box-sizing: border-box;
-      padding: 10px;
+      padding: 12px;
       font-size: 14px;
       color: #6b4b5a;
       text-align: center;
-      transition: transform 0.8s ease;
       display: flex;
       align-items: center;
       justify-content: center;
+      transition: transform 0.8s ease;
+      z-index: 1;
     }
 
-    /* open state */
+    /* ---------- OPEN STATE ---------- */
     .open .flap {
       transform: rotateX(180deg);
     }
 
     .open .letter {
-      transform: translateX(-50%) translateY(-60px);
-    }
-
-    /* slide in animation trigger */
-    .show-envelope {
-      transform: translateX(0);
-    }
-
-    /* Cute top text */
-    .instruction {
-      font-size: 16px;
-      color: #6b4b5a;
-      margin-bottom: 10px;
+      transform: translateX(-50%) translateY(-35px);
     }
   </style>
 </head>
@@ -185,7 +176,23 @@
 
     <!-- SCREEN 1 -->
     <div class="screen" id="screen1">
-      <div class="heart"></div>
+
+      <div class="pixel-heart">
+        <!-- 7 x 6 grid = 42 blocks -->
+        <!-- row 1 -->
+        <div></div><div class="filled"></div><div class="filled"></div><div></div><div class="filled"></div><div class="filled"></div><div></div>
+        <!-- row 2 -->
+        <div class="filled"></div><div class="filled"></div><div class="filled"></div><div class="filled"></div><div class="filled"></div><div class="filled"></div><div class="filled"></div>
+        <!-- row 3 -->
+        <div class="filled"></div><div class="filled"></div><div class="filled"></div><div class="filled"></div><div class="filled"></div><div class="filled"></div><div class="filled"></div>
+        <!-- row 4 -->
+        <div></div><div class="filled"></div><div class="filled"></div><div class="filled"></div><div class="filled"></div><div class="filled"></div><div></div>
+        <!-- row 5 -->
+        <div></div><div></div><div class="filled"></div><div class="filled"></div><div class="filled"></div><div></div><div></div>
+        <!-- row 6 -->
+        <div></div><div></div><div></div><div class="filled"></div><div></div><div></div><div></div>
+      </div>
+
       <button class="pixel-button" id="startBtn">click here!</button>
     </div>
 
@@ -194,14 +201,15 @@
       <div class="instruction">click to open</div>
 
       <div class="envelope-wrapper" id="envelopeWrapper">
-        <div class="envelope"></div>
+        <div class="envelope">
+          <div class="letter">
+            Happy birthday Mom!<br />
+            I love you so much.
+          </div>
+        </div>
+
         <div class="flap"></div>
         <div class="bottom"></div>
-
-        <div class="letter">
-          Happy birthday Mom!<br />
-          I love you so much.
-        </div>
       </div>
     </div>
 
@@ -219,7 +227,7 @@
 
       setTimeout(() => {
         envelopeWrapper.classList.add("show-envelope");
-      }, 100);
+      }, 150);
     });
 
     envelopeWrapper.addEventListener("click", () => {
