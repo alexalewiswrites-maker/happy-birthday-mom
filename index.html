@@ -88,7 +88,8 @@
     .envelope-wrapper {
       position: relative;
       width: 220px;
-      height: 220px; /* extra space for letter sliding out */
+      /* tall enough to show letter above envelope: letter(110) + gap(10) + envelope(140) */
+      height: 260px;
       cursor: pointer;
       transform: translateX(400px);
       transition: transform 0.8s ease;
@@ -107,18 +108,19 @@
       background: #ffe4f2;
       border: 5px solid #cc7fa6;
       box-sizing: border-box;
-      overflow: hidden; /* IMPORTANT: hides the letter */
+      /* NO overflow: hidden — letter must be able to slide out */
       z-index: 2;
     }
 
-    /* ---------- LETTER (STARTS HIDDEN INSIDE) ---------- */
+    /* ---------- LETTER — sibling of envelope, not child ---------- */
     .letter {
       position: absolute;
       width: 190px;
       height: 110px;
       left: 50%;
       transform: translateX(-50%);
-      bottom: -90px; /* hidden inside envelope */
+      /* Start hidden behind the envelope body */
+      bottom: 10px;
       background: #ffffff;
       border: 4px solid #cc7fa6;
       box-sizing: border-box;
@@ -130,13 +132,14 @@
       align-items: center;
       justify-content: center;
       transition: bottom 0.9s ease;
-      z-index: 1;
+      z-index: 1; /* behind envelope and flap while closed */
     }
 
     /* ---------- TOP FLAP ---------- */
     .flap {
       position: absolute;
-      top: 80px;
+      /* base of triangle flush with top of envelope: 140px (envelope) - 80px (flap height) = 60px */
+      bottom: 60px;
       left: 0;
       width: 0;
       height: 0;
@@ -167,7 +170,8 @@
     }
 
     .open .letter {
-      bottom: 55px; /* slides OUT clearly */
+      bottom: 145px; /* slides out above the envelope */
+      z-index: 5;    /* in front of everything when open */
     }
   </style>
 </head>
@@ -196,14 +200,13 @@
 
       <div class="envelope-wrapper" id="envelopeWrapper">
 
-        <!-- envelope body contains the letter -->
-        <div class="envelope">
-          <div class="letter">
-            Happy birthday Mom!<br />
-            I love you so much.
-          </div>
+        <!-- LETTER is now a sibling of envelope, NOT inside it -->
+        <div class="letter">
+          Happy birthday Mom!<br />
+          I love you so much.
         </div>
 
+        <div class="envelope"></div>
         <div class="flap"></div>
         <div class="bottom"></div>
       </div>
